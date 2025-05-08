@@ -3,7 +3,7 @@ from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
 import boto3
 from botocore.exceptions import ClientError
-import get_message
+import lambdacode
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -14,8 +14,10 @@ TABLE_NAME = "Employees"
 dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 table = dynamodb.Table(TABLE_NAME)
 
+# Set up home page
 @app.route('/', methods=['GET', 'POST'])
 def delete_account():
+    # If the request is post, get the information the user entered
     if request.method == 'POST':
         email = request.form['email']
         fname = request.form['fname']
@@ -29,6 +31,7 @@ def delete_account():
         response = table.scan()
         items = response['Items']
         count = len(items)
+        # Add the employee to the table
         table.put_item(
         Item={
             'ID': count+1,
@@ -42,7 +45,6 @@ def delete_account():
             'Hobbies': hobbies
         }
         )
-        print(get_message.new_employee_message())
         flash('Employee added successfully!')
         return redirect('/')  # PRG pattern
 
