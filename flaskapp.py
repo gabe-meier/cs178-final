@@ -2,8 +2,6 @@ from flask import Flask
 from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
 import boto3
-from botocore.exceptions import ClientError
-import lambdacode
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -15,7 +13,7 @@ dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 table = dynamodb.Table(TABLE_NAME)
 
 # Set up home page
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET','POST'])
 def delete_account():
     # If the request is post, get the information the user entered
     if request.method == 'POST':
