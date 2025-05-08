@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tagify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+
+    <style>
+        body {
+            max-width: 700px;
+            margin: 30px auto;
+            font-size: 0.9rem;
+        }
+        .form-label {
+            margin-bottom: 0.1rem;
+        }
+        .form-control, .form-select {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.85rem;
+        }
+        .row > div {
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h4 class="mb-3">Add New Employee</h4>
+
+    <!-- Flash Message -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="flash-alert">
+          {{ messages[0] }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Form -->
+    <form method="POST">
+        <div class="mb-2">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <label class="form-label">First Name</label>
+                <input type="text" name="fname" class="form-control" required>
+            </div>
+            <div class="col">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="lname" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <label class="form-label">Home Town</label>
+                <input type="text" name="town" class="form-control" required>
+            </div>
+            <div class="col">
+                <label class="form-label">Home State</label>
+                <input type="text" name="state" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">College</label>
+            <input type="text" name="college" class="form-control">
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <label class="form-label">Team</label>
+                <input type="text" name="team" class="form-control">
+            </div>
+            <div class="col">
+                <label class="form-label">Role</label>
+                <input type="text" name="role" class="form-control">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Hobbies (type and press Enter)</label>
+            <input name="hobbies" class="form-control" id="hobbies-input">
+        </div>
+
+        <button type="submit" class="btn btn-sm btn-primary">Add Employee</button>
+    </form>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+    <script>
+        // Initialize Tagify on the hobbies input
+        const input = document.getElementById('hobbies-input');
+        new Tagify(input);
+
+        // Auto-dismiss flash message
+        setTimeout(() => {
+            const alert = document.getElementById('flash-alert');
+            if (alert) {
+                const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            }
+        }, 3000);
+    </script>
+
+</body>
+</html>
